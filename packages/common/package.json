@@ -1,0 +1,9 @@
+{
+  "name": "@common/validation",
+  "version": "1.0.0",
+  "main": "src/schemas.js",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "^17.2.1"
+  }
+}

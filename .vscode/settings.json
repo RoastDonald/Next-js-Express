@@ -1,11 +1,10 @@
 {
-    "editor.codeActionsOnSave": {
+  "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-    },
-    "editor.formatOnSave": true,
-    "editor.formatOnType": false,
-    "files.eol": "\n",
-    "cSpell.words": [
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "cSpell.words": [
     "Parens",
     "Whitespaces",
     "codebases",
@@ -23,5 +22,5 @@
     "stylelint",
     "userdata",
     "vsce"
-    ]
-    }
+  ]
+}
