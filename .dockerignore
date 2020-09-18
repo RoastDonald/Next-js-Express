@@ -1,0 +1,3 @@
+!./package.json
+!./packages/server/package.json
+!./packages/common/package.json

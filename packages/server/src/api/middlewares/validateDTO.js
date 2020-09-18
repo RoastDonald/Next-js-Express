@@ -2,25 +2,19 @@ import logger from "../../loaders/logger";
 
 const validateDTO = (schema, _) => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
-    const isValid = error == null;
-    if (!isValid) {
-      const { details } = error;
-      const usefulErrors = {};
-      details.map((error) => {
-        if (!usefulErrors.hasOwnProperty(error.path.join("_"))) {
-          usefulErrors[error.path.join("_")] = {
-            type: error.type,
-            msg: `error.${error.path.join("_")}.${error.type}`,
-          };
-        }
+    let errors = [];
+    try {
+      const isValid = schema.validateSync(req.body, { abortEarly: false });
+      if (isValid) return next();
+    } catch (e) {
+      e.inner.forEach(({ path, message }) => {
+        errors.push({ [path]: message });
       });
-      logger.info(usefulErrors);
+
+      logger.info(errors);
       res.status(422).json({
-        errors: usefulErrors,
+        errors,
       });
-    } else {
-      next();
     }
   };
 };

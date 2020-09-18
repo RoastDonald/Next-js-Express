@@ -6,8 +6,16 @@ class UserController {
 
   getUserData = async (req, res, next) => {
     const userRepository = new UserRepository();
-    const user = await userRepository.getById(req.session.userId);
-    res.status(200).json({ data: user.getPublicFields() });
+    const { error, data: user } = await userRepository.getById(
+      req.session.userId
+    );
+    if (error) {
+      res.status(422).json({
+        message: "Cannot get user",
+      });
+    } else {
+      res.status(200).json({ data: user.getPublicFields() });
+    }
   };
 
   login = async (req, res, next) => {
@@ -29,13 +37,13 @@ class UserController {
       return res.status(401).json({ message: "incorrect login or password" });
     } else {
       req.session.userId = user._id;
-      req.session.role = user.role;
       res.status(200).json({ data: user.getPublicFields() });
     }
   };
 
   register = async (req, res, next) => {
     const { email } = req.body;
+
     const userRepository = new UserRepository();
     const {
       error: findError,
@@ -65,10 +73,10 @@ class UserController {
     }
   };
 
-  logout = async (req, res, next) => {
+  logout = (req, res, next) => {
     new Promise((resolve) =>
       req.session.destroy((err) => {
-        res.clearCookie(config.credentials.COOKIE_NAME);
+        res.clearCookie(config.credentials.cookieName);
         if (err) resolve(false);
         else resolve(true);
       })

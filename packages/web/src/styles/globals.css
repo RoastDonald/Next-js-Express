@@ -1,0 +1,40 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#root {
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* .slick-slide {
+  height: auto;
+}
+.slick-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+/* the slides */
+/* .slick-slide {
+  margin: 0 10px;
+}
+/* the parent */
+/* .slick-list {
+  margin: 0 -10px;
+} */

@@ -1,7 +1,22 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
+const {
+  SERVER_PORT,
+
+  MONGO_USERNAME,
+  MONGO_PASSWORD,
+  MONGO_HOSTNAME,
+  MONGO_PORT,
+  MONGO_DB,
+
+  REDIS_PORT,
+  REDIS_HOST,
+
+  COOKIE_NAME,
+  COOKIE_SECRET,
+} = process.env;
+const mongoUri = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`;
 
 export default {
   api: {
@@ -12,12 +27,27 @@ export default {
   },
   databases: {
     mongodb: {
-      connectionURL: process.env.MONGODB_URI,
+      connectionURL: mongoUri,
+      config: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        connectTimeoutMS: 10000,
+        // authSource: "admin",
+        user: MONGO_USERNAME,
+        pass: MONGO_PASSWORD,
+        autoIndex: false,
+        poolSize: 10,
+        bufferMaxEntries: 0,
+      },
+    },
+    redis: {
+      port: REDIS_PORT,
+      host: REDIS_HOST,
     },
   },
-  serverPORT: process.env.SERVER_PORT,
+  serverPORT: SERVER_PORT || 8080,
   credentials: {
-    COOKIE_NAME: process.env.COOKIE_NAME,
-    COOKIE_SECRET: process.env.COOKIE_SECRET,
+    cookieName: COOKIE_NAME,
+    cookieSecret: COOKIE_SECRET,
   },
 };

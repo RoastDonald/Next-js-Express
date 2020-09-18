@@ -11,7 +11,7 @@ export default (app) => {
   });
 
   // app.use("trust proxy");
-  app.use(cors());
+  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
   app.use(helment());
   app.use(express.json());
 

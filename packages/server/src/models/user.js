@@ -38,11 +38,6 @@ const userSchema = Schema({
   },
 });
 
-userSchema.methods.getPublicFields = function () {
-  const { name, email, surname, role, cart, history } = this;
-  return { name, email, surname, role, cart, history };
-};
-
 userSchema.methods.comparePassword = async function (candidatePassword) {
   let isValid;
   try {
@@ -52,6 +47,10 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
     return false;
   }
   return isValid;
+};
+userSchema.methods.getPublicFields = function () {
+  const { name, email, surname, role, cart, history } = this;
+  return { name, email, surname, role, cart, history };
 };
 
 userSchema.statics.generateHashedPassword = async function (password) {

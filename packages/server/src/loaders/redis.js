@@ -3,16 +3,18 @@ import config from "../config/index";
 import connectRedis from "connect-redis";
 import Redis from "ioredis";
 
+const { cookieName, cookieSecret } = config.credentials;
+const { port, host } = config.databases.redis;
 export default (app) => {
   const RedisStore = connectRedis(session);
   app.use(
     session({
-      name: config.credentials.COOKIE_NAME,
+      name: cookieName,
       store: new RedisStore({
         client: new Redis(),
         disableTouch: true,
-        port: 6379,
-        host: "localhost",
+        port,
+        host,
       }),
       saveUninitialized: false,
       cookie: {
@@ -21,7 +23,7 @@ export default (app) => {
         secure: false,
         sameSite: "lax",
       },
-      secret: config.credentials.COOKIE_SECRET,
+      secret: cookieSecret,
       resave: false,
       rolling: true,
     })

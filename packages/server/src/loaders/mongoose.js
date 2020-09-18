@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 import config from "../config";
+import logger from "../loaders/logger";
 
+const { connectionURL, config: dbconfig } = config.databases.mongodb;
 export default async () => {
-  const conn = await mongoose.connect(config.databases.mongodb.connectionURL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    const conn = await mongoose.connect(connectionURL, dbconfig);
+    return conn.connection.db;
+  } catch (error) {
+    console.log(connectionURL, JSON.stringify(dbconfig));
 
-  return conn.connection.db;
+    logger.error(error);
+    return null;
+  }
 };

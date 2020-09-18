@@ -1,5 +1,6 @@
 import User from "../models/user";
 import logger from "../loaders/logger";
+import { Types } from "mongoose";
 
 class UserRepo {
   constructor() {}
@@ -7,6 +8,7 @@ class UserRepo {
   getByProperties = async (props) => {
     try {
       const data = await User.findOne(props);
+
       return { error: null, data };
     } catch (error) {
       logger.error(error);
@@ -17,6 +19,7 @@ class UserRepo {
   getById = async (id) => {
     try {
       const data = await User.findOne(Types.ObjectId(id));
+
       return { error: null, data };
     } catch (error) {
       logger.error(error);
