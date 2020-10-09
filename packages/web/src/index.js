@@ -10,18 +10,16 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 import "./styles/globals.css";
 import "./styles/main.css";
-
+import "react-quill/dist/quill.snow.css";
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Router history={history}>
-            <App />
-          </Router>
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router history={history}>
+          <App />
+        </Router>{" "}
+      </PersistGate>{" "}
+    </Provider>{" "}
+  </ThemeProvider>,
   document.getElementById("root")
 );

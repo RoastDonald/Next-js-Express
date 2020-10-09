@@ -1,4 +1,6 @@
-import { Router } from "express";
+import {
+  Router
+} from "express";
 import middlewares from "../middlewares";
 import ShopController from "../controllers/ShopController";
 import schemas from "@common/validation";
@@ -12,6 +14,11 @@ export default (app) => {
   route.get("/guitars", shopController.getProducts);
   route.get("/woods", shopController.getWoods);
   route.get("/brands", shopController.getBrands);
+
+
+  route.post('/shop', middlewares.validateDTO(schemas.filters),
+    shopController.getProductsByFilter);
+
 
   route.post(
     "/guitars",

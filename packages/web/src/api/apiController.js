@@ -1,51 +1,105 @@
 import axios from "axios";
+import Routes from './routes';
 
 const server = axios.create({
   baseURL: "http://localhost:8080",
-  timeout: 10000,
+  timeout: 1000 * 20,
   withCredentials: true,
 });
 
-const handleErrors = ({ data, status }) => {
+const VERBS = {
+  POST: 'post',
+  GET: 'get'
+};
+const handleErrors = (response) => {
+  if (!response) throw Error('Server Error');
+  const {
+    status,
+    data
+  } = response;
   if (status > 400) {
     throw data;
+  } else if (!data) {
+    throw Error('Server Error');
   }
 };
 
+
+/**
+ * 
+ * @param url query 
+ * @param {Object} params 
+ */
+
+const appendParams = (query, params) => {
+  if (!params && !query) return query;
+  query = query.concat('?');
+  for (let param in params) {
+    query = query.concat(`${param}=${params[param]}&`);
+  }
+  query = query.substring(0, query.length - 1);
+  return query;
+}
+
+
+
+const handleRequest = async (url, method, values = null, config = null) => {
+  try {
+    const {
+      data
+    } = await server[method](url, values, config);
+    return data;
+  } catch ({
+    response
+  }) {
+    handleErrors(response);
+  }
+}
 export default {
-  login: async (userCredentials) => {
-    try {
-      const { data } = await server.post("/api/users/login", userCredentials);
-      return data;
-    } catch ({ response }) {
-      handleErrors(response);
-    }
+  login: (userCredentials) => {
+    return handleRequest(Routes.LOGIN, VERBS['POST'], userCredentials);
   },
-  logout: async () => {
-    try {
-      const { data } = await server.get("/api/users/logout");
-      return data;
-    } catch ({ response }) {
-      handleErrors(response);
-    }
+  logout: () => {
+    return handleRequest(Routes.LOGOUT, VERBS['GET']);
   },
-  register: async (userCredentials) => {
-    try {
-      const { data } = await server.post(
-        "/api/users/register",
-        userCredentials
-      );
-      return data;
-    } catch ({ response }) {
-      handleErrors(response);
-    }
+  register: (userCredentials) => {
+    return handleRequest(Routes.REGISRER, VERBS['POST'], userCredentials);
   },
-  me: async () => {
-    try {
-      const { data } = await server.get("/api/users/me");
-      return data;
-    } catch ({ response }) {
-      handleErrors(response);
-    }
+  me: () => {
+    return handleRequest(Routes.ME, VERBS['GET']);
   },
+  postProduct:(data)=>{
+    return handleRequest(Routes.PRODUCTS,VERBS['POST'],data);
+  },
+
+  uploadFile: (file) => {
+    const conf = {
+      header: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    return handleRequest(Routes.UPLOAD_FILE, VERBS['POST'], file, conf);
+  },
+  deleteFile: (id) => {
+    return handleRequest(Routes.DELETE_FILE, VERBS['POST'], {
+      id
+    });
+  },
+
+  getProductsByBestSell: () => {
+    return handleRequest(appendParams(Routes.PRODUCTS, {
+      sortBy: 'sold',
+      order: 'desc',
+      limit: 4
+    }), VERBS['GET']);
+  },
+  getProductsByFilters: (filters) => {
+    return handleRequest(Routes.SHOP, VERBS['POST'], filters);
+  },
+  getWoods: () => {
+    return handleRequest(Routes.WOODS, VERBS['GET']);
+  },
+  getBrands: () => {
+    return handleRequest(Routes.BRANDS, VERBS['GET']);
+  }
 };

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const Spinner = () => {
   const classes = useStyles();
   return (
-    <Grid container xs={12} className={classes.loaderWrapper}>
+    <Grid container height="100vh" className={classes.loaderWrapper}>
       <CircularProgress color="secondary" />
     </Grid>
   );

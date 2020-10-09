@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { registerStart } from "../../redux/user/user.actions";
 import { slelectCurrentUserDomain } from "../../redux/user/user.selectors";
-import Ffield from "../common/Ffield/Ffield.component";
+import M1TextField from "../common/material-controll/text-field.component";
 
 const useStyles = makeStyles((theme) => ({
   registerContainer: {
@@ -74,49 +74,54 @@ const Register = ({ register, userMeta, toggleAuth }) => {
             <Grid container xs={12} className={classes.registerContainer}>
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={6}>
-                  <Ffield
+                  <M1TextField
                     name="name"
                     placeholder="Enter your name"
                     label="Name"
+                    disabled={isLoading}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Ffield
+                  <M1TextField
                     name="surname"
                     placeholder="Enter your surname"
                     label="Surname"
+                    disabled={isLoading}
                   />
                 </Grid>
               </Grid>
 
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={12}>
-                  <Ffield
+                  <M1TextField
                     name="email"
                     type="email"
                     placeholder="Enter your email"
                     label="Email"
+                    disabled={isLoading}
                   />
                 </Grid>
               </Grid>
 
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={6}>
-                  <Ffield
+                  <M1TextField
                     name="password"
                     type="password"
                     placeholder="Enter your password"
                     label="Password"
+                    disabled={isLoading}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Ffield
+                  <M1TextField
                     name="passwordConfirmation"
                     type="password"
                     placeholder="Confirm your password"
                     label="Repeat password"
+                    disabled={isLoading}
                   />
                 </Grid>
               </Grid>

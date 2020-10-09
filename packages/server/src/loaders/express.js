@@ -11,10 +11,13 @@ export default (app) => {
   });
 
   // app.use("trust proxy");
-  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+  app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3006"
+  }));
   app.use(helment());
-  app.use(express.json());
 
+  app.use(express.json());
   app.use(config.api.prefix, routes());
 
   app.use((req, res, next) => {

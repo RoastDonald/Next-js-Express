@@ -1,25 +1,37 @@
 import React from "react";
-import DashboardLayout from "../../hoc/user-layout";
+import DashboardLayout from "../../hoc/user-layout/user-layout";
 import Button from "../../components/common/button/button.component";
+import AddProduct from "./components/add-product/add-product.component";
+
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+
+const Panel = (props) => (
+  <div className="user_nfo_panel">
+    <h1>User information</h1>
+    <div>
+      {/* <span>{currentUser.name}</span> */}
+      {/* <span>{currentUser.surname}</span> */}
+      {/* <span>{currentUser.email}</span> */}
+    </div>
+    <Button link="/user/profile">Edit account info</Button>
+  </div>
+  // <div className="user_nfo_panel">
+  //   <h1>User history purchases</h1>
+  //   <div className="user_product_block_wrapper">history</div>
+  // </div>
+);
 
 const UserDashboard = ({ currentUser }) => {
+  const { path, url } = useRouteMatch();
+  console.log(path, url);
   return (
     <DashboardLayout>
-      <div>
-        <div className="user_nfo_panel">
-          <h1>User information</h1>
-          <div>
-            <span>{currentUser.name}</span>
-            <span>{currentUser.surname}</span>
-            <span>{currentUser.email}</span>
-          </div>
-          <Button link="/user/profile">Edit account info</Button>
-        </div>
-        <div className="user_nfo_panel">
-          <h1>User history purchases</h1>
-          <div className="user_product_block_wrapper">history</div>
-        </div>
-      </div>
+      <Switch>
+        <Route exact path={`${path}/dashboard`} component={Panel} />
+        <Route path={`${path}/profile`} component={Panel} />
+
+        <Route path={`${path}/add-product`} component={AddProduct} />
+      </Switch>
     </DashboardLayout>
   );
 };

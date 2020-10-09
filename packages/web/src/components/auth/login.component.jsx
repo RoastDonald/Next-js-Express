@@ -3,7 +3,7 @@ import schemas from "@common/validation";
 import { Formik, Form } from "formik";
 import { createStructuredSelector } from "reselect";
 import { slelectCurrentUserDomain } from "../../redux/user/user.selectors";
-import Ffield from "../common/Ffield/Ffield.component";
+import M1TextField from "../common/material-controll/text-field.component";
 import { connect } from "react-redux";
 import { Collapse, IconButton, InputAdornment, Link } from "@material-ui/core";
 import {
@@ -70,7 +70,7 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
   }, [userMeta.error]);
   useEffect(() => {
     if (userMeta.currentUser || userMeta.error) {
-      setLoading(false);
+      if (Object.keys(userMeta.error)) setLoading(false);
     }
   }, [userMeta.currentUser, userMeta.error]);
   const classes = useStyles();
@@ -87,17 +87,19 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
       >
         {() => (
           <Form className={classes.form}>
-            <Ffield
+            <M1TextField
               name="email"
               type="email"
               placeholder="Enter your login"
               label="Login"
+              disabled={isLoading}
             />
-            <Ffield
+            <M1TextField
               name="password"
               type={isPassVisable ? "text" : "password"}
               placeholder="Enter your password"
               label="Password"
+              disabled={isLoading}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

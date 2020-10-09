@@ -3,6 +3,7 @@ dotenv.config();
 
 const {
   SERVER_PORT,
+  NODE_ENV,
 
   MONGO_USERNAME,
   MONGO_PASSWORD,
@@ -15,10 +16,15 @@ const {
 
   COOKIE_NAME,
   COOKIE_SECRET,
+
+  CLOUDINARY_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET
 } = process.env;
 const mongoUri = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`;
 
 export default {
+  isProd: NODE_ENV === 'production',
   api: {
     prefix: "/api",
   },
@@ -50,4 +56,9 @@ export default {
     cookieName: COOKIE_NAME,
     cookieSecret: COOKIE_SECRET,
   },
+  cloudinary: {
+    cloud_name: CLOUDINARY_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET
+  }
 };

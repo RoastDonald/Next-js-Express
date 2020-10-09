@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: 0,
     backgroundImage: `url(/images/login_bck.jpg)`,
     backgroundRepeat: "no-repeat",
     transition: "all 0.3s ease",
@@ -19,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     [`${theme.breakpoints.down("sm")} `]: {
       flexDirection: "column",
       alignItems: "center",
+      justifyContent: "center",
     },
   },
   text: {
@@ -37,19 +37,47 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
+
+    marginTop: theme.customStyles.headerHeight + 40,
+    // marginBottom: theme.customStyles.headerHeight + 40,
   },
   loginContainer: {
     borderRadius: "15px",
     backgroundColor: "aliceblue",
     padding: "25px 10px",
-    width: "50%",
+    width: "60%",
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    [`${theme.breakpoints.down("sm")} `]: {
-      width: "100%",
-      marginTop: "15vh",
+
+    [`${theme.breakpoints.between("xs", "sm")} `]: {
+      width: "94% ",
+      margin: "0 auto",
+    },
+    [`${theme.breakpoints.between("xs++", "sm")} `]: {
+      width: "75% ",
+      padding: "30px 15px",
+    },
+    [`${theme.breakpoints.up("sm")}`]: {
+      width: "100% ",
+      padding: "30px 15px",
+    },
+
+    [`${theme.breakpoints.up("md")} `]: {
+      width: "60% ",
+      padding: "30px 15px",
+    },
+
+    [`${theme.breakpoints.up("lg")} `]: {
+      width: "50% ",
+      padding: " 20px 10px",
+    },
+
+    [`${theme.breakpoints.up("xl")} `]: {
+      fontSize: "20px",
+      width: "35% ",
+      padding: " 15px 10px",
     },
   },
 }));
@@ -69,12 +97,12 @@ const AuthPage = ({ currentUser }) => {
       container
       className={classes.container}
       direction="row"
-      spacing={spacing}
+      // spacing={spacing}
     >
-      <Grid item xs={5}>
+      <Grid item md={5}>
         <Paper component="div" className={classes.loginImage} />
       </Grid>
-      <Grid item xs={7} className={classes.loginBlock}>
+      <Grid item md={7} sm={6} xs={12} className={classes.loginBlock}>
         <Box className={classes.loginContainer}>
           <h2>Enter to Waves</h2>
           <p>If you have an account please log in.</p>

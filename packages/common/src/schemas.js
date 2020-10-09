@@ -21,11 +21,11 @@ const schemas = {
   product: yup.object({
     name: yup.string().required(),
     description: yup.string().max(10000).required(),
-    price: yup.number().max(255),
+    price: yup.number().max(10000000).min(0, 'Not negative number').required(),
     brand: yup.string().required(),
     shipping: yup.boolean().required(),
     available: yup.boolean().required(),
-    woods: yup.string().required(),
+    wood: yup.string().required(),
     frets: yup.number().required(),
     publish: yup.boolean().required(),
   }),
@@ -35,6 +35,11 @@ const schemas = {
   brand: yup.object({
     name: yup.string().max(100).required(),
   }),
+  filters: yup.object({
+    skip: yup.number(),
+    limit: yup.number(),
+    filters: yup.object().required()
+  })
 };
 
 module.exports = schemas;

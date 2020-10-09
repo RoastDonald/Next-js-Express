@@ -11,10 +11,11 @@ export default () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundSize: "contain",
         backgroundColor: "antiquewhite",
       }}
     >
-      <strong style={{ fontSize: "24px" }}>
+      <strong style={{ fontSize: "24px", textAlign: "center" }}>
         404 This Page is Lost in the Wind
       </strong>
     </div>
