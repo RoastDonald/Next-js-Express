@@ -15,7 +15,7 @@ const Spinner = () => {
   const classes = useStyles();
   return (
     <Grid container height="100vh" className={classes.loaderWrapper}>
-      <CircularProgress color="secondary" />
+      <CircularProgress color="#fff" />
     </Grid>
   );
 };

@@ -17,24 +17,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function M1Alert({text}) {
+export default function M1Alert({text,isSaved,handleAlertClose}) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
 
- 
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
 
   return (
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{vertical: 'top',
+      <Snackbar open={true} autoHideDuration={6000} onClose={handleAlertClose}  anchorOrigin={{vertical: 'top',
       horizontal: 'center'}}
       >
-        <Alert onClose={handleClose} severity="success">
+        <Alert onClose={handleAlertClose} severity={isSaved?"success":"error"}>
           {text}
         </Alert>
       </Snackbar>

@@ -45,7 +45,7 @@ export const useStyles = makeStyles((theme) => ({
       },
       selectLabel: {
         textAlign: "center",
-        backgroundColor: "tomato",
+        backgroundColor: "#292929",
         color: "#fff",
         padding: 12,
         borderRadius: 15,

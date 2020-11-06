@@ -58,7 +58,6 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
   const [isLoading, setLoading] = useState(false);
   const [isErrorOpen, setErrorOpen] = useState(false);
   const [isPassVisable, setPassVisable] = useState(false);
-  console.log(isPassVisable);
   const handlePasswordVisibility = () => {
     setPassVisable(!isPassVisable);
   };

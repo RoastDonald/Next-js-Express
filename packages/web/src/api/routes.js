@@ -9,4 +9,5 @@ export default {
     SHOP: '/api/products/shop',
     UPLOAD_FILE: '/api/file/upload',
     DELETE_FILE: '/api/file/delete',
+    USERS:'/api/admin/users'
 }

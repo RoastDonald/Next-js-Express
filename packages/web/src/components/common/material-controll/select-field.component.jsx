@@ -22,7 +22,7 @@ const M1SelectField = ({ items, ...props }) => {
       <Field
        as={Select}
        type='select'
-       value={!field.value? items[0]._id : field.value}
+       value={!field.value? items && items[0]._id : field.value}
         style={{ width: "100%" }}
         className={className}
         variant="filled"

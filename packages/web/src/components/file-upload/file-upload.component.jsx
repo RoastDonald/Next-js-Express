@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "space-between",
   },
   dropzone: {
+    outline:'none',
     margin: 12,
     borderRadius: 15,
     width: 180,

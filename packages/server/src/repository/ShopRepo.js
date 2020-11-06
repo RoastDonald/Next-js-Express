@@ -33,7 +33,6 @@ class ShopRepo {
   };
   saveProduct = async ({available,brand,description,price,publish,name,frets,shipping,images,wood}) => {
     try {
-      console.log(313131);
       const product = new Product({
         available,
         brand,

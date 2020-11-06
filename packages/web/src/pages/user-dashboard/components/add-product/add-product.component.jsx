@@ -44,7 +44,8 @@ const FormHook = ({children,handleFormChange})=>{
 const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
   const classes = useStyles();
   const [alert,setAlert] = useState({
-    message:'Guitar was succesfully added',
+    message:'',
+    isSaved:null,
     show:false
   }); 
 
@@ -71,7 +72,12 @@ const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
     getBrands();
     getWoods();
   }, []);
-  console.log(state);
+  
+  const handleAlertClose = ()=>{
+    setAlert({...alert,show:false});
+  }
+
+
   return (
     <Grid container>
       <Formik
@@ -83,9 +89,9 @@ const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
           try {
             const res  = await apiController.postProduct(state);
             
-            setAlert({...alert,show:true});
+            setAlert({...alert,show:true,message:'Guitar was succesfully added',isSaved:true});
           }catch(error){
-            console.log(error);
+            setAlert({...alert,show:true,message:'Cannot save Guitar, check product\'s name',isSaved:false});
           }
         }}
       >
@@ -190,7 +196,6 @@ const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
                 toggleTrueProp='public'
                 isToggle={true}
                 />
-            {JSON.stringify(errors)}
             <Box display="flex" justifyContent="center">
               <Button
                 type="submit"
@@ -208,7 +213,7 @@ const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
         )}
       </Formik>
 
-      {!alert.show?null : <M1Alert text={alert.message}/>}
+      {!alert.show?null : <M1Alert text={alert.message}  isSaved={alert.isSaved} handleAlertClose={handleAlertClose}/>}
     </Grid>
   );
 };

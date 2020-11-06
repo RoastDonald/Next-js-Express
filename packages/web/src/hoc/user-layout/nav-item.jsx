@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 0,
     paddingBottom: 0,
     color: "#fff",
+    position:'relative'
   },
   button: {
     color: theme.palette.text.secondary,
@@ -27,10 +28,19 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   },
   active: {
-    backgroundColor: "tomato",
+    backgroundColor: "#2c2c2c",
     color: theme.palette.primary.main,
+    borderRadius:0,
     "& $title": {
       fontWeight: theme.typography.fontWeightMedium,
+    },
+    "&::after":{
+      left:0,
+      content:"''",
+      position:'absolute',
+      height:'100%',
+      width:5,
+      backgroundColor:'#fff'
     },
     "& $icon": {
       color: theme.palette.primary.main,
@@ -40,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
   const classes = useStyles();
-  console.log(className, href, title);
   return (
     <ListItem
       className={clsx(classes.item, className)}

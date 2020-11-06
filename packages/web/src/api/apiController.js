@@ -101,5 +101,8 @@ export default {
   },
   getBrands: () => {
     return handleRequest(Routes.BRANDS, VERBS['GET']);
+  },
+  getUsers:()=>{
+    return handleRequest(Routes.USERS,VERBS['GET']);
   }
 };

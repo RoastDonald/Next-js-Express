@@ -36,6 +36,14 @@ const userSchema = Schema({
     type: Number,
     default: 0,
   },
+  createdAt: {
+    type:Number,
+    default:Date.now()
+  },
+  updatedAt: {
+    type:Number,
+    default:Date.now()
+  },
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {

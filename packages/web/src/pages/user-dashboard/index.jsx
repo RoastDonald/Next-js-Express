@@ -2,7 +2,7 @@ import React from "react";
 import DashboardLayout from "../../hoc/user-layout/user-layout";
 import Button from "../../components/common/button/button.component";
 import AddProduct from "./components/add-product/add-product.component";
-
+import ManageUsers from './components/manage-users/manage-users.component';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 const Panel = (props) => (
@@ -31,6 +31,7 @@ const UserDashboard = ({ currentUser }) => {
         <Route path={`${path}/profile`} component={Panel} />
 
         <Route path={`${path}/add-product`} component={AddProduct} />
+        <Route path={`${path}/users`} component={ManageUsers} />
       </Switch>
     </DashboardLayout>
   );
