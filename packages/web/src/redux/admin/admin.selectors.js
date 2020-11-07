@@ -6,6 +6,8 @@ const adminDomain = state => state.admin;
 
 export const selectUsers = createSelector(
     [adminDomain],
-    (admin)=>admin.users
+    (admin)=>{
+        return admin.users}
 );
+
 

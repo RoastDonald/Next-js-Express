@@ -20,5 +20,5 @@ const generateConfig = (key, props = []) => ({
 export default combineReducers({
   user: persistReducer(generateConfig("user"), userReducer),
   shop: persistReducer(generateConfig("shop", ['products']), shopReducer),
-  admin: persistReducer(generateConfig("admin",['error']),adminReducer)
+  admin: adminReducer
 });

@@ -5,6 +5,7 @@ import {
 
 export const useStyles = makeStyles((theme) => ({
     root: {
+      padding:30,
         maxWidth: "80%",
         minWidth: "80%",
         "& .MuiFormControl-root > label": {

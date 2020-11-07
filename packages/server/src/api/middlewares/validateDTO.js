@@ -1,10 +1,14 @@
 import logger from "../../loaders/logger";
 
-const validateDTO = (schema, _) => {
+const validateDTO = (schema, config) => {
   return (req, res, next) => {
+    let data = req.body;
+    if(config && config.query){
+      data = req.query;
+    }
     let errors = [];
     try {
-      const isValid = schema.validateSync(req.body, { abortEarly: false });
+      const isValid = schema.validateSync(data, { abortEarly: false });
       if (isValid) return next();
     } catch (e) {
       e.inner.forEach(({ path, message }) => {

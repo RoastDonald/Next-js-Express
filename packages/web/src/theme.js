@@ -85,11 +85,12 @@ export default createMuiTheme({
         borderRadius: "0",
       },
     },
-    MuiSvgIcon: {
-      root: {
-        fill: "#fff",
-      },
-    },
+   
+    // MuiSvgIcon: {
+    //   root: {
+    //     fill: "#fff",
+    //   },
+    // },
     MuiPaper: {
       root: {
         backgroundColor: "#161616",

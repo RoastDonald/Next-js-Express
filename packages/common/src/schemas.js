@@ -17,7 +17,9 @@ const schemas = {
   login: yup.object({
     ...userCredentials,
   }),
-
+  email:yup.object({
+    email:yup.string().email().required(),
+  }),
   product: yup.object({
     name: yup.string().required(),
     description: yup.string().max(10000).required(),

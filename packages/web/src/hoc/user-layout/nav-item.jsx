@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(1),
+    color:'#fff'
   },
   title: {
     marginRight: "auto",

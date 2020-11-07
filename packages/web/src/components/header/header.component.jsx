@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     width: 36,
     height: 36,
+    color:"#fff"
   },
   cartContainer: {
     minWidth: "300px",

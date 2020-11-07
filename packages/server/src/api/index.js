@@ -4,6 +4,7 @@ import {
 import user from "./routes/user";
 import shop from "./routes/shop";
 import file from './routes/file';
+import admin from './routes/admin';
 
 
 export default () => {
@@ -11,5 +12,6 @@ export default () => {
   user(app);
   shop(app);
   file(app);
+  admin(app);
   return app;
 };

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Box, Collapse, Grid, IconButton, Input, InputAdornment, makeStyles, Typography,TableContainer,Paper } from '@material-ui/core';
+import { Box, Collapse, Grid, IconButton, Input, InputAdornment, makeStyles, Typography,TableContainer,Paper, CircularProgress  } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,65 +12,25 @@ import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {getUsersStart} from '../../../../redux/admin/admin.actions';
 import { selectUsers } from '../../../../redux/admin/admin.selectors';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {Button,Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions} from '@material-ui/core';
+import {useStyles} from './manage-users.styles';
+import apiController from '../../../../api/apiController';
 
-
-const useStyles = makeStyles((theme)=>({
-    root:{
-        display:'flex',
-        flexDirection:'column',
-        margin:'0 auto'
-    },
-    topBar:{
-        display:'flex', 
-        justifyContent:'space-between',
-        alignItems:'center'
-    },
-    searchField:{
-        color:'#fff ',
-    padding: 5,
-    borderRadius: 10,
-    backgroundColor: '#4a4a4a'
-    },
-    tableContainer:{
-        borderRadius: 20, 
-        marginTop:20,
-        border:'none',
-        backgroundColor: '#dedede',
-        fontSize:18,
-        "& .MuiTableRow-root":{
-            borderBottom:'none'
-        },
-        "& .MuiSvgIcon-root": {
-            fill:'#191919'
-        }
-    }
-}));
-
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-  ];
-  
 
 const ManageUsers = ({getUsers,users}) => {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
 
     useEffect(()=>{
-        getUsers();
-    },[]);
+          getUsers();
+      },[]);
+
     return (
         <Grid container className={classes.root}>
-            <Grid item className={classes.topBar}>
-                <Typography variant="h1">
-                    Manage Users
-                </Typography>
-                <Grid item>
-                <Input
+              <Grid item className={classes.searchWrapper}>
+                <Input 
+                placeholder={'Enter username or email'}
                 disableUnderline={true}
                 className={classes.searchField}
           id="input-with-icon-adornment"
@@ -81,26 +41,24 @@ const ManageUsers = ({getUsers,users}) => {
           }
         />
             </Grid>
-            </Grid>
 
 
         <Grid>
-        <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table aria-label="collapsible table">
+        <TableContainer component={Paper} className={classes.tableContainer} >
+      <Table aria-label="collapsible table" dense>
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell>Full Name</TableCell>
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">Role</TableCell>
-            <TableCell align="right">Created At</TableCell>
-            <TableCell align="right">Updated At</TableCell>
+            <TableCell align="center">Actions</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {users.map((user) => (
+            <Row key={user.name} user={user} getUsers={getUsers}/>
           ))}
         </TableBody>
       </Table>
@@ -112,45 +70,67 @@ const ManageUsers = ({getUsers,users}) => {
 }
 
 
-function createData(name, calories, fat, carbs, protein, price) {
-    return {
-      name,
-      calories,
-      fat,
-      carbs,
-      protein,
-      price,
-      history: [
-        { date: '2020-01-05', customerId: '11091700', amount: 3 },
-        { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
-      ],
-    };
-  }
 
+function Row({user,getUsers}) {
+  const classes = useStyles();
+    const [isExpanded, setExpand] = useState(false);
+    const [editState, setEditState] = useState({
+      isOpen:false,
+      isFetching:false
+    });
+    const [deleteState, setDeleteState] = useState({
+      isOpen:false,
+      isFetching:false
+    });
 
-function Row(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
-  
+   
+ 
     return (
       <React.Fragment>
         <TableRow >
           <TableCell>
-            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            <IconButton aria-label="expand row" size="small" onClick={() => setExpand(!isExpanded)}>
+              {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.name}
+            {user.name + " " + user.surname}
           </TableCell>
-          <TableCell align="right">{row.calories}</TableCell>
-          <TableCell align="right">{row.fat}</TableCell>
-          <TableCell align="right">{row.carbs}</TableCell>
-          <TableCell align="right">{row.protein}</TableCell>
+          <TableCell align="right">{user.email}</TableCell>
+          <TableCell align="right">{user.role? (
+            <Typography variant="subtitle2">
+              <span className={classes.adminRoleText}>admin</span>
+            </Typography>
+          ) : (
+            <Typography variant="subtitle2" >
+            <span className={classes.userRoleText}>user</span>
+          </Typography>
+          )}</TableCell>
+          <TableCell align="center" className={classes.actionsContainer}>
+           
+            <EditDialog
+              editState={editState}            
+              classes={classes}
+              user={user}
+              setEditState={setEditState}
+              getUsers={getUsers}
+            
+            />
+
+            <DeleteDialog 
+              deleteState={deleteState}
+              classes={classes}
+              user={user}
+              setDeleteState={setDeleteState}
+              getUsers={getUsers}
+              />
+           
+          </TableCell>
+          
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography variant="h6" gutterBottom component="div">
                   History
@@ -165,7 +145,7 @@ function Row(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.history.map((historyRow) => (
+                    {/* {row.history.map((historyRow) => (
                       <TableRow key={historyRow.date}>
                         <TableCell component="th" scope="row">
                           {historyRow.date}
@@ -176,7 +156,7 @@ function Row(props) {
                           {Math.round(historyRow.amount * row.price * 100) / 100}
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ))} */}
                   </TableBody>
                 </Table>
               </Box>
@@ -186,11 +166,153 @@ function Row(props) {
       </React.Fragment>
     );
   }
+
+
+function EditDialog({editState,classes,user,setEditState,getUsers}){
+
+  const handleClickOpen =  () => {
+    setEditState({
+      ...editState,
+      isOpen:true
+    });
+    
+  };
+
+
+  const handleClose = () => {
+    setEditState({
+      ...editState,
+      isOpen:false
+    });
+  };
+
+
+
+  return (
+    <React.Fragment>
+
+    <IconButton className={`${classes.editIcon} ${classes.iconButton}`} onClick={handleClickOpen}>
+    <EditIcon />
+  </IconButton>
+  <Dialog
+    disableBackdropClick={editState.isFetching}
+    open={editState.isOpen}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title" >
+      <Typography variant="subtitle" className={classes.editDialog}>
+      Edit
+      <Typography 
+        variant="subtitle2"
+        className={classes.userEmailDialog}>
+          {user.email}
+      </Typography> account ?
+      </Typography>
+   </DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        <Typography variant="subtitle2" color="primary">All user data will be erased</Typography>
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary" disabled={editState.isFetching} >
+        Cancel
+      </Button>
+      <Button onClick={()=>handleClickOpen} color="primary" autoFocus className={classes.editIcon} disabled={editState.isFetching}>
+{!editState.isFetching?'Edit':(<CircularProgress size={16} />)}
+      </Button> 
+    </DialogActions>
+</Dialog>
+</React.Fragment>
+  )
+}
+
+
+
+function DeleteDialog({deleteState,classes,user,setDeleteState,getUsers}){
+  const handleDeleting =  async (email)=>{
+    try {
+      setDeleteState({
+        ...deleteState,
+        isFetching:true
+      });
+      await apiController.deleteUser(email);
+      setDeleteState({
+        ...deleteState,
+        isOpen:false
+      });
+      getUsers();
+    }catch (error){
+      setDeleteState({
+        ...deleteState,
+        isOpen:false
+      });
+    }
+  }
+
+
+  const handleClickOpen =  () => {
+    setDeleteState({
+      ...deleteState,
+      isOpen:true
+    });
+    
+  };
+
+
+  const handleClose = () => {
+     setDeleteState({
+      ...deleteState,
+      isOpen:false
+    });
+  };
+
+  return (
+    <React.Fragment>
+    <IconButton className={`${classes.deleteIcon} ${classes.iconButton}`} onClick={handleClickOpen}>
+    <DeleteIcon />
+  </IconButton>
   
+    <Dialog
+    disableBackdropClick={deleteState.isFetching}
+    open={deleteState.isOpen}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title" >
+      <Typography variant="subtitle" className={classes.editDialog}>
+      Delete
+      <Typography 
+        variant="subtitle2"
+        className={classes.userEmailDialog}>
+          {user.email}
+      </Typography> account ?
+      </Typography>
+   </DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        <Typography variant="subtitle2" color="primary">All user data will be erased</Typography>
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary" disabled={deleteState.isFetching} >
+        Cancel
+      </Button>
+      <Button onClick={()=>handleDeleting(user.email)} color="primary" autoFocus className={classes.deleteIcon} disabled={deleteState.isFetching}>
+{!deleteState.isFetching?'Delete':(<CircularProgress size={16} />)}
+      </Button> 
+    </DialogActions>
+</Dialog>
+</React.Fragment>
+  )
+};
 
 
 const mapStateToProps = createStructuredSelector({
-    users:selectUsers    
+    users:selectUsers, 
 });
 const mapDispatchToProps = dispatch =>({
     getUsers:()=>dispatch(getUsersStart())

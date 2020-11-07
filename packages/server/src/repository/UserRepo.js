@@ -8,22 +8,20 @@ class UserRepo {
   getByProperties = async (props) => {
     try {
       const data = await User.findOne(props);
-
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error, data: null };
+      return { error:'Server Error', data: null };
     }
   };
 
   getById = async (id) => {
     try {
       const data = await User.findOne(Types.ObjectId(id));
-
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error, data: null };
+      return { error:'Server Error', data: null };
     }
   };
 
@@ -41,7 +39,7 @@ class UserRepo {
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error, data: null };
+      return { error:'Server Error', data: null };
     }
   };
 }

@@ -10,35 +10,46 @@ import {
   SettingsApplications as SettingsApplicationsIcon,
   ShoppingBasketOutlined,
 } from "@material-ui/icons";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import Roles from "../../utils/role";
 import NavItem from "./nav-item";
+import CategoryIcon from '@material-ui/icons/Category';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs.component';
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
-    flex: "0 0 80%",
+    flex: '100%'
   },
-
+  iconWrapper:{
+    color:'orange'
+  },
   dashboardControll: {
     zIndex: 0,
     display: "flex",
     justifyContent: "center",
   },
   pageContainer: {
+    marginTop:50,
+    marginLeft:'auto',
     display: "flex",
     justifyContent: "center",
     backgroundColor: '#191919',
-    padding: 30,
     borderRadius: 15,
-    minHeight:'100vh'
   },
   dashboardControllIcon: {
     "& .MuiSvgIcon-root": {
       fill: "#000",
     },
+  },
+  breadcrumbs:{
+    position: 'absolute',
+    top: -50,
+    left: 0,
   },
   root: {
     display: "flex",
@@ -47,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   dashboardInner: {
-
     display: "flex",
     flex: "1 1 auto",
     overflow: "hidden",
@@ -62,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
   sectionTilte: {
     marginTop: 20,
   },
+  drawerWrapper:{
+    zIndex:100
+  }
 }));
 
 const linksEnum = {
@@ -96,7 +109,7 @@ const links = {
       {
         title: "Dashboard",
         link: "/admin/dashboard",
-        icon: PostAddIcon,
+        icon: DashboardIcon,
       },
       {
         title: "Add products",
@@ -106,12 +119,12 @@ const links = {
       {
         title: "Manage categories",
         link: "/admin/categories",
-        icon: PostAddIcon,
+        icon: CategoryIcon,
       },
       {
         title: "Manage Products",
         link: "/admin/products",
-        icon: SupervisedUserCircleOutlined,
+        icon: FileCopyIcon,
       },
       {
         title: "Manage users",
@@ -132,6 +145,8 @@ const UserLayout = ({ currentUser, children }) => {
       <List>
         {links && links.items.map((item) => (
           <NavItem
+
+            className={classes.iconWrapper}
             href={item.link}
             key={item.link}
             title={item.title}
@@ -149,7 +164,7 @@ const UserLayout = ({ currentUser, children }) => {
         justify="space-between"
         className={classes.dashboardInner}
       >
-        <Grid item xs={2}>
+        <Grid item  xs={2} className={classes.drawerWrapper}>
           <Drawer
             variant="permanent"
             classes={{
@@ -165,8 +180,10 @@ const UserLayout = ({ currentUser, children }) => {
           </Drawer>
         </Grid>
 
-        <Grid item xs={10} className={classes.pageContainer}>
-          <div className={classes.pageContent}>{children}</div>
+          
+        <Grid item md={10} xs={6} className={classes.pageContainer}>
+            <Grid item  className={classes.breadcrumbs}><Breadcrumbs /></Grid>
+          <Grid item className={classes.pageContent}>{children}</Grid>
         </Grid>
       </Grid>
     </Grid>

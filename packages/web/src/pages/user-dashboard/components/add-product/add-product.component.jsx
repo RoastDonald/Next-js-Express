@@ -77,7 +77,6 @@ const AddProduct = ({ brands, woods, getBrands, getWoods }) => {
     setAlert({...alert,show:false});
   }
 
-
   return (
     <Grid container>
       <Formik

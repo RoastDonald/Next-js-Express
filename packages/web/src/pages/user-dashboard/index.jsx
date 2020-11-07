@@ -23,7 +23,6 @@ const Panel = (props) => (
 
 const UserDashboard = ({ currentUser }) => {
   const { path, url } = useRouteMatch();
-  console.log(path, url);
   return (
     <DashboardLayout>
       <Switch>

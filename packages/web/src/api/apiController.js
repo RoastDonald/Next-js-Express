@@ -9,9 +9,11 @@ const server = axios.create({
 
 const VERBS = {
   POST: 'post',
-  GET: 'get'
+  GET: 'get',
+  DELETE:'delete'
 };
 const handleErrors = (response) => {
+  console.log(response);
   if (!response) throw Error('Server Error');
   const {
     status,
@@ -45,6 +47,13 @@ const appendParams = (query, params) => {
 
 const handleRequest = async (url, method, values = null, config = null) => {
   try {
+    if(method === VERBS['DELETE']){
+      console.log(values);
+      const {data} = await server.delete(url,{
+        params:{...values},
+      });
+      return data;
+    }
     const {
       data
     } = await server[method](url, values, config);
@@ -104,5 +113,8 @@ export default {
   },
   getUsers:()=>{
     return handleRequest(Routes.USERS,VERBS['GET']);
+  },
+  deleteUser:(email)=>{
+    return handleRequest(Routes.USERS,VERBS['DELETE'],{email});
   }
 };
