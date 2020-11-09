@@ -1,15 +1,6 @@
 import React from "react";
-import "../../styles/spinner.css";
-import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CircularProgress } from "@material-ui/core";
-const useStyles = makeStyles((theme) => ({
-  loaderWrapper: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+import { useStyles } from './spinner.styles';
 
 const Spinner = () => {
   const classes = useStyles();

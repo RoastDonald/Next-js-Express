@@ -1,17 +1,14 @@
-import React, { Fragment } from "react";
+import { FMButton } from '@/components/formik-mui';
 import {
-  Card,
+  Box, Card,
   CardActionArea,
   CardMedia,
-  Typography,
-  Grid,
-  Box,
+  Typography
 } from "@material-ui/core";
-import Button from "../common/button/button.component";
 import {
-  Star as StarIcon,
-  ShoppingBasket as ShoppingBasketIcon,
+  ShoppingBasket as ShoppingBasketIcon, Star as StarIcon
 } from "@material-ui/icons";
+import React, { Fragment } from "react";
 import { ReactComponent as ImageIcon } from "../../ui/icons/no-image.svg";
 import { useStyles } from "./product-card.styles";
 
@@ -20,15 +17,15 @@ const ProductCard = ({ item }) => {
 
   return (
     <Fragment>
-      <Box className={classes.productDiscount}>
+      {/* <Box className={classes.productDiscount}>
         <Typography component="span" variant="body4">
           -30%
         </Typography>
-      </Box>
+      </Box> */}
       <Card key={item._id} className={classes.cardContainer}>
         <CardActionArea className={classes.cardInner}>
           <CardMedia className={classes.productImage}>
-            {item.images[0]? <div style={{backgroundImage:item.images[0].url}}/> : <ImageIcon />}
+            {item.images[0] ? <div style={{ backgroundImage: item.images[0].url }} /> : <ImageIcon />}
           </CardMedia>
 
           <Box className={classes.productMeta}>
@@ -46,9 +43,10 @@ const ProductCard = ({ item }) => {
                 <Typography component="span" className={classes.productPrice}>
                   ${item.price}
                 </Typography>
-                <Button className={classes.productBtn}>
+                <FMButton className={classes.productBtn}>
                   <ShoppingBasketIcon className={classes.productIcon} />
-                </Button>
+                  Add to Cart
+                </FMButton>
               </Box>
             </Box>
           </Box>

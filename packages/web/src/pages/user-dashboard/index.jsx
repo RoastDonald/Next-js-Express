@@ -1,9 +1,10 @@
 import React from "react";
 import DashboardLayout from "../../hoc/user-layout/user-layout";
-import Button from "../../components/common/button/button.component";
+
 import AddProduct from "./components/add-product/add-product.component";
 import ManageUsers from './components/manage-users/manage-users.component';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { FMButton } from '@/components/formik-mui';
 
 const Panel = (props) => (
   <div className="user_nfo_panel">
@@ -13,7 +14,7 @@ const Panel = (props) => (
       {/* <span>{currentUser.surname}</span> */}
       {/* <span>{currentUser.email}</span> */}
     </div>
-    <Button link="/user/profile">Edit account info</Button>
+    <FMButton link="/user/profile">Edit account info</FMButton>
   </div>
   // <div className="user_nfo_panel">
   //   <h1>User history purchases</h1>

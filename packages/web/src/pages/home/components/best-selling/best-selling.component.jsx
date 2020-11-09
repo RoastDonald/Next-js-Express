@@ -2,10 +2,14 @@ import { Grid, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import ProductCard from "../../../../components/product-card/product-card.component";
-import { productStart } from "../../../../redux/shop/shop.actions";
-import { selectProducts } from "../../../../redux/shop/shop.selectors";
+
+import { ProductCard } from "@/components";
+
+import { productStart } from "@/redux/shop/shop.actions";
+import { selectProducts } from "@/redux/shop/shop.selectors";
+
 import { useStyles } from "./best-selling.styles";
+
 const BestSelling = ({ getProducts, products }) => {
   const classes = useStyles();
   useEffect(() => {

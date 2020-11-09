@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import apiController from "../../api/apiController";
+import API_CONTROLLER from "../../api/controller.api";
 import {
   brandFailure,
   brandSuccess,
@@ -15,16 +15,17 @@ function* handleProductRequest({ payload: filters }) {
     let _products = null;
     let _size = 0;
     if (filters) {
-      const { data: products, size } = yield apiController.getProductsByFilters(
-        filters
-      );
+      const {
+        data: products,
+        size,
+      } = yield API_CONTROLLER.getProductsByFilters(filters);
       _size = size;
       _products = [...(filters.products || []), ...products];
     } else {
       const {
         data: products,
         size,
-      } = yield apiController.getProductsByBestSell();
+      } = yield API_CONTROLLER.getProductsByBestSell();
       _products = products;
       _size = size;
     }
@@ -36,7 +37,7 @@ function* handleProductRequest({ payload: filters }) {
 
 function* handleWoodRequest() {
   try {
-    const { data: woods } = yield apiController.getWoods();
+    const { data: woods } = yield API_CONTROLLER.getWoods();
     yield put(woodSuccess(woods));
   } catch (error) {
     yield put(woodFailure(error));
@@ -45,14 +46,12 @@ function* handleWoodRequest() {
 
 function* handleBrandRequest() {
   try {
-    const { data: brands } = yield apiController.getBrands();
+    const { data: brands } = yield API_CONTROLLER.getBrands();
     yield put(brandSuccess(brands));
   } catch (error) {
     yield put(brandFailure(error));
   }
 }
-
-
 
 function* onProductRequest() {
   yield takeLatest(shopActionTypes.PRODUCT_START, handleProductRequest);

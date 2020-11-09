@@ -1,26 +1,28 @@
 import React, { useEffect, useState, Suspense } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import { Grid } from "@material-ui/core";
-import Breadcrumbs from "../../components/breadcrumbs/breadcrumbs.component";
+
+import { Breadcrumbs, Spinner } from "@/components";
+import { FMCheckboxBtn, FMRadioBtn } from '@/components/formik-mui';
+import WithLoadMore from "./components/with-load-more/with-load-more.component";
+
 import {
   brandStart,
   woodStart,
   productStart,
-} from "../../redux/shop/shop.actions";
-import { connect } from "react-redux";
-import CollapseCheckbox from "../../components/common/collapse-checkbox/collapse-checkbox.component";
+} from "@/redux/shop/shop.actions";
 import {
   selectBrands,
   selectWoods,
   selectProducts,
   selectSize,
-} from "../../redux/shop/shop.selectors";
-import { createStructuredSelector } from "reselect";
-import frets from "../../utils/frets";
-import price from "../../utils/price";
-import CollapseRadio from "../../components/common/collapse-radio/collapse-radio.component";
-import WithLoadMore from "./components/with-load-more/with-load-more.component";
+} from "@/redux/shop/shop.selectors";
+
+import frets from "@/utils/frets";
+import price from "@/utils/price";
 import { useStyles } from "./shop.styles";
-import Spinner from "../../components/spinner";
+
 const Shop = ({
   getWoods,
   getBrands,
@@ -101,28 +103,28 @@ const Shop = ({
 
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <CollapseCheckbox
+          <FMCheckboxBtn
             className={classes.filter}
             title="Brands"
             isOpen={false}
             list={brands}
             onFilter={(filters) => handleFilters(filters, "brand")}
           />
-          <CollapseCheckbox
+          <FMCheckboxBtn
             className={classes.filter}
             title="Frets"
             isOpen={false}
             list={frets}
             onFilter={(filters) => handleFilters(filters, "frets")}
           />
-          <CollapseCheckbox
+          <FMCheckboxBtn
             className={classes.filter}
             title="Wood"
             isOpen={false}
             list={woods}
             onFilter={(filters) => handleFilters(filters, "wood")}
           />
-          <CollapseRadio
+          <FMRadioBtn
             title="Price"
             isOpen={true}
             list={price}

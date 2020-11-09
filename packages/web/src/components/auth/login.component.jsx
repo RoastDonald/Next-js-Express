@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from "react";
+import { FMButton, FMTextField } from '@/components/formik-mui';
+import { loginStart } from "@/redux/user/user.actions";
+import { slelectCurrentUserDomain } from "@/redux/user/user.selectors";
 import schemas from "@common/validation";
-import { Formik, Form } from "formik";
-import { createStructuredSelector } from "reselect";
-import { slelectCurrentUserDomain } from "../../redux/user/user.selectors";
-import M1TextField from "../common/material-controll/text-field.component";
-import { connect } from "react-redux";
 import { Collapse, IconButton, InputAdornment, Link } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Close as CloseIcon,
   Visibility,
-  VisibilityOff,
+  VisibilityOff
 } from "@material-ui/icons";
-import { loginStart } from "../../redux/user/user.actions";
-import Button from "../common/button/button.component";
 import { Alert } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
+import { Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
+
+
+
+
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
@@ -81,19 +85,19 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
         validationSchema={schemas.login}
         onSubmit={(values) => {
           setLoading(true);
-          login(values).then((err) => {});
+          login(values).then((err) => { });
         }}
       >
         {() => (
           <Form className={classes.form}>
-            <M1TextField
+            <FMTextField
               name="email"
               type="email"
               placeholder="Enter your login"
               label="Login"
               disabled={isLoading}
             />
-            <M1TextField
+            <FMTextField
               name="password"
               type={isPassVisable ? "text" : "password"}
               placeholder="Enter your password"
@@ -133,7 +137,7 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
               </Collapse>
             )}
             <div className={classes.loginBtnContainer}>
-              <Button
+              <FMButton
                 className={classes.loginBtn}
                 type="submit"
                 variant="contained"
@@ -144,7 +148,7 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
                 disableRipple={true}
               >
                 login
-              </Button>
+              </FMButton>
               <div className={classes.loginCtaContainer}>
                 <Link onClick={toggleAuth} color="grey">
                   Create an account?

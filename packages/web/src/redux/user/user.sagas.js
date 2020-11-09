@@ -10,21 +10,12 @@ import {
   userMeSuccess,
   userMeFailure,
 } from "./user.actions";
-import {
-  takeLatest,
-  call,
-  put,
-  all
-} from "redux-saga/effects";
-import apiController from "../../api/apiController";
+import { takeLatest, call, put, all } from "redux-saga/effects";
+import API_CONTROLLER from "../../api/controller.api";
 
-function* handleLogin({
-  payload: userCredentials
-}) {
+function* handleLogin({ payload: userCredentials }) {
   try {
-    const {
-      data: user
-    } = yield apiController.login(userCredentials);
+    const { data: user } = yield API_CONTROLLER.login(userCredentials);
     yield put(loginSuccess(user));
     history.push("/user/dashboard");
   } catch (error) {
@@ -32,13 +23,9 @@ function* handleLogin({
   }
 }
 
-function* handleRegister({
-  payload: userCredentials
-}) {
+function* handleRegister({ payload: userCredentials }) {
   try {
-    const {
-      data: user
-    } = yield apiController.register(userCredentials);
+    const { data: user } = yield API_CONTROLLER.register(userCredentials);
     yield put(registerSuccess(user));
     history.push("/user/dashboard");
   } catch (error) {
@@ -48,7 +35,7 @@ function* handleRegister({
 
 function* handleLogout() {
   try {
-    yield apiController.logout();
+    yield API_CONTROLLER.logout();
     yield put(logoutSuccess());
     history.push("/login");
   } catch (error) {
@@ -58,9 +45,7 @@ function* handleLogout() {
 
 function* handleUserMe() {
   try {
-    const {
-      data: user
-    } = yield apiController.me();
+    const { data: user } = yield API_CONTROLLER.me();
     yield put(userMeSuccess(user));
   } catch (error) {
     yield put(userMeFailure(error));

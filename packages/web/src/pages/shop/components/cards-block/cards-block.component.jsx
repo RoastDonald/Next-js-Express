@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import ProductCard from "../../../../components/product-card/product-card.component";
+import { ProductCard } from "@/components";
 
 const CardsBlock = ({ products, grid }) => {
   return (

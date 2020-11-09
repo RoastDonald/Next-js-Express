@@ -7,9 +7,9 @@ import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { registerStart } from "../../redux/user/user.actions";
+import { registerStart } from "@/redux/user/user.actions";
 import { slelectCurrentUserDomain } from "../../redux/user/user.selectors";
-import M1TextField from "../common/material-controll/text-field.component";
+import { FMTextField } from '@/components/formik-mui';
 
 const useStyles = makeStyles((theme) => ({
   registerContainer: {
@@ -74,7 +74,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
             <Grid container xs={12} className={classes.registerContainer}>
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={6}>
-                  <M1TextField
+                  <FMTextField
                     name="name"
                     placeholder="Enter your name"
                     label="Name"
@@ -83,7 +83,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <M1TextField
+                  <FMTextField
                     name="surname"
                     placeholder="Enter your surname"
                     label="Surname"
@@ -94,7 +94,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
 
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={12}>
-                  <M1TextField
+                  <FMTextField
                     name="email"
                     type="email"
                     placeholder="Enter your email"
@@ -106,7 +106,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
 
               <Grid container xs={12} spacing={2}>
                 <Grid item xs={6}>
-                  <M1TextField
+                  <FMTextField
                     name="password"
                     type="password"
                     placeholder="Enter your password"
@@ -116,7 +116,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <M1TextField
+                  <FMTextField
                     name="passwordConfirmation"
                     type="password"
                     placeholder="Confirm your password"

@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import Slider from "react-slick";
-import Button from "../../../../components/common/button/button.component";
 import { Box } from "@material-ui/core";
 import { useStyles } from "./slider.styles";
+import { FMButton } from "@/components/formik-mui";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -85,7 +86,7 @@ const App = () => {
               <div className={classes.ctaTitle}>{slide.primaryLine}</div>
               <div className={classes.ctaDetails}>{slide.secondaryLine}</div>
               <div className={classes.ctaBtn}>
-                <Button
+                <FMButton
                   type="default"
                   link={slide.to}
                   style={{
@@ -95,7 +96,7 @@ const App = () => {
                   }}
                 >
                   {slide.linkTitle}
-                </Button>
+                </FMButton>
               </div>
             </Box>
           </div>

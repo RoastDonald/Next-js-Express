@@ -1,38 +1,12 @@
 import { CircularProgress, Fade } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import clsx from "clsx";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import apiController from "../../api/apiController";
+import API_CONTROLLER from "../../api/controller.api";
+import { useStyles } from './file-upload.styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    border: "2px dashed #4d4d4d",
-    padding: 12,
-    borderRadius: 10,
-    flexWrap: "wrap",
-    display: "flex",
-    flexwrap: "wrap",
-    alignContent: "space-between",
-  },
-  dropzone: {
-    outline:'none',
-    margin: 12,
-    borderRadius: 15,
-    width: 180,
-    height: 180,
-    backgroundColor: " rgb(52, 52, 52,0.3)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dropIcon: {
-    fontSize: "2.7rem",
-  },
-}));
-
-const FileUpload = ({ className, handleFileUploading,defaultValue }) => {
+const FileUpload = ({ className, handleFileUploading, defaultValue }) => {
 
   const [state, setState] = useState({
     uploadedImages: defaultValue,
@@ -40,11 +14,10 @@ const FileUpload = ({ className, handleFileUploading,defaultValue }) => {
   });
 
 
-  useEffect(()=>{
-    console.log('up');
+  useEffect(() => {
     handleFileUploading(state.uploadedImages);
-  },[state.uploadedImages]);
- 
+  }, [state.uploadedImages]);
+
 
   const classes = useStyles();
   const handleDrop = async (files) => {
@@ -52,7 +25,7 @@ const FileUpload = ({ className, handleFileUploading,defaultValue }) => {
     const data = new FormData();
     data.append("file", files[0]);
     try {
-      const res = await apiController
+      const res = await API_CONTROLLER
         .uploadFile(data)
         .then(({ url, ...rest }) => ({
           ...rest,
@@ -70,15 +43,13 @@ const FileUpload = ({ className, handleFileUploading,defaultValue }) => {
   };
   const removeImage = async (id) => {
     try {
-      const res = await apiController.deleteFile(id);
+      const res = await API_CONTROLLER.deleteFile(id);
       const updatedImages = state.uploadedImages.filter(
         (image) => image.public_id !== id
       );
-      console.log(updatedImages);
       setState({ ...state, uploadedImages: updatedImages });
 
     } catch (error) {
-      console.log(error);
     }
   };
   const { isUploading } = state;
