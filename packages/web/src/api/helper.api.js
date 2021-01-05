@@ -40,7 +40,7 @@ export const handleRequest = async (
 const handleErrors = (response) => {
   if (!response) throw Error("Server Error");
   const { status, data } = response;
-  if (status > 400) {
+  if (status >= 400) {
     throw data;
   } else if (!data) {
     throw Error("Server Error");

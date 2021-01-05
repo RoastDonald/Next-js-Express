@@ -1,5 +1,9 @@
 import userActionTypes from "./user.types";
 
+export const clearError = () => ({
+  type: userActionTypes.CLEAR_ERROR,
+});
+
 export const loginStart = (userCredentials) => ({
   type: userActionTypes.USER_LOGIN_START,
   payload: userCredentials,
@@ -18,6 +22,7 @@ export const registerStart = (userCredentials) => ({
   type: userActionTypes.USER_REGISTER_START,
   payload: userCredentials,
 });
+
 export const registerSuccess = (userInfo) => ({
   type: userActionTypes.USER_REGISTER_SUCCESS,
   payload: userInfo,

@@ -1,5 +1,4 @@
 import userActionTypes from "./user.types";
-import history from "../../history";
 import {
   loginFailure,
   loginSuccess,
@@ -17,7 +16,7 @@ function* handleLogin({ payload: userCredentials }) {
   try {
     const { data: user } = yield API_CONTROLLER.login(userCredentials);
     yield put(loginSuccess(user));
-    history.push("/user/dashboard");
+    // history.push("/my-account");
   } catch (error) {
     yield put(loginFailure(error));
   }
@@ -27,7 +26,7 @@ function* handleRegister({ payload: userCredentials }) {
   try {
     const { data: user } = yield API_CONTROLLER.register(userCredentials);
     yield put(registerSuccess(user));
-    history.push("/user/dashboard");
+    // history.push("/my-account");
   } catch (error) {
     yield put(registerFailure(error));
   }
@@ -37,7 +36,6 @@ function* handleLogout() {
   try {
     yield API_CONTROLLER.logout();
     yield put(logoutSuccess());
-    history.push("/login");
   } catch (error) {
     yield put(logoutFailure(error));
   }

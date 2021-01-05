@@ -48,14 +48,19 @@ const initialValues = {
   passwordConfirmation: "",
 };
 
-const Register = ({ register, userMeta, toggleAuth }) => {
+const Register = ({ register, userMeta, toggleAuth, error }) => {
   const classes = useStyles();
   const [isLoading, setLoading] = useState(false);
   const [isErrorOpen, setErrorOpen] = useState(false);
-
+  
+  useEffect(() => {
+    if (userMeta.error) {
+      setErrorOpen(true);
+    }
+  }, [userMeta.error]);
   useEffect(() => {
     if (userMeta.currentUser || userMeta.error) {
-      setLoading(false);
+      if (Object.keys(userMeta.error || {})) setLoading(false);
     }
   }, [userMeta.currentUser, userMeta.error]);
   return (
@@ -157,6 +162,7 @@ const Register = ({ register, userMeta, toggleAuth }) => {
                 >
                   register
                 </Button>
+
                 <Link
                   color="grey"
                   className={classes.registerLink}

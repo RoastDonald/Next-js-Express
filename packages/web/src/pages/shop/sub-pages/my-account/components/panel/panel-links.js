@@ -1,0 +1,27 @@
+
+import {
+    SettingsApplications as SettingsApplicationsIcon,
+    ShoppingBasketOutlined
+} from "@material-ui/icons";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
+export const links = {
+  public: true,
+    items: [
+      {
+        title: "My account",
+        link: "/my-account",
+        icon: AccountCircleIcon,
+      },
+      {
+        title: "User Information",
+        link: "/my-account/profile",
+        icon: SettingsApplicationsIcon,
+      },
+      {
+        title: "My Cart",
+        link: "/my-account/cart",
+        icon: ShoppingBasketOutlined,
+      },
+    ],
+  },

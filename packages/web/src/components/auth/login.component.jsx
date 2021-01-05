@@ -73,7 +73,7 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
   }, [userMeta.error]);
   useEffect(() => {
     if (userMeta.currentUser || userMeta.error) {
-      if (Object.keys(userMeta.error)) setLoading(false);
+      if (Object.keys(userMeta.error || {})) setLoading(false);
     }
   }, [userMeta.currentUser, userMeta.error]);
   const classes = useStyles();
@@ -85,7 +85,7 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
         validationSchema={schemas.login}
         onSubmit={(values) => {
           setLoading(true);
-          login(values).then((err) => { });
+          login(values);
         }}
       >
         {() => (
@@ -168,7 +168,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispachToProps = (dispatch) => ({
-  login: async (userCredentials) => await dispatch(loginStart(userCredentials)),
+  login: (userCredentials) => dispatch(loginStart(userCredentials)),
 });
 
 export default connect(mapStateToProps, mapDispachToProps)(LoginBlock);

@@ -1,6 +1,4 @@
-import {
-  createMuiTheme
-} from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const purpleLight = "#011d3a";
 const purpleDark = "#F20775";
@@ -13,17 +11,17 @@ export default createMuiTheme({
       purple: purpleDark,
       blue: blueLight,
       grey: grey,
-      white: white
+      white: white,
     },
     primary: {
-      main: blueLight,
+      main: purpleLight,
     },
     secondary: {
       main: purpleLight,
     },
     icon_v1: {
-      main: 'tomato'
-    }
+      main: "tomato",
+    },
   },
   breakpoints: {
     values: {
@@ -71,21 +69,29 @@ export default createMuiTheme({
     },
     body4: {
       fontSize: 16,
-      fontWight: 600
-    }
+      fontWight: 600,
+    },
   },
   overrides: {
+    MuiButton: {
+      root: {
+        "$:hover": {
+          textDecoration: "none",
+          backgroundColor: "orange",
+        },
+      },
+    },
     MuiGrid: {
       item: {
-        position: 'relative'
-      }
+        position: "relative",
+      },
     },
     MuiPaper: {
       rounded: {
         borderRadius: "0",
       },
     },
-   
+
     // MuiSvgIcon: {
     //   root: {
     //     fill: "#fff",
@@ -93,7 +99,7 @@ export default createMuiTheme({
     // },
     MuiPaper: {
       root: {
-        backgroundColor: "#161616",
+        backgroundColor: "#F3F3F3",
         color: blueLight,
       },
     },

@@ -7,6 +7,11 @@ const INTIAL_STATE = {
 
 export default (prevState = INTIAL_STATE, action) => {
   switch (action.type) {
+    case userActionTypes.CLEAR_ERROR:
+      return {
+        ...prevState,
+        error: null,
+      };
     case userActionTypes.USER_LOGIN_SUCCESS:
     case userActionTypes.USER_REGISTER_SUCCESS:
     case userActionTypes.USER_ME_SUCCESS:

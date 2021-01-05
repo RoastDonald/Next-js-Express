@@ -1,6 +1,8 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 const SecureRoute = ({
@@ -10,24 +12,16 @@ const SecureRoute = ({
   currentUser,
   ...rest
 }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!currentUser) {
-          return (
-            <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
-            />
-          );
-        }
-        if (roles && roles.indexOf(currentUser.role) === -1) {
-          return <Redirect to={{ pathname: "/" }} />;
-        }
-        return <Component {...props} />;
-      }}
-    />
-  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!currentUser) navigate("/login", { replace: true });
+    if (roles && roles.indexOf(currentUser.role) === -1) {
+      navigate("/", { replace: true });
+    }
+
+  }, [])
+
+  return <Component {...rest} />;
 };
 
 const mapStateToProps = createStructuredSelector({

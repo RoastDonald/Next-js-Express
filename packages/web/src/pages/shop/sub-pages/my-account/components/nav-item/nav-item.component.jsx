@@ -1,0 +1,77 @@
+import React from "react";
+import { NavLink as RouterLink } from "react-router-dom";
+import clsx from "clsx";
+import { Button, ListItem, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  item: {
+    display: "flex",
+    paddingTop: 0,
+    paddingBottom: 0,
+    color: "#fff",
+    position: 'relative',
+
+  },
+  button: {
+    color: theme.palette.text.secondary,
+    justifyContent: "flex-start",
+    letterSpacing: 0,
+    padding: "10px 8px",
+    textTransform: "none",
+    width: "100%",
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.text.secondary
+  },
+  title: {
+    marginRight: "auto",
+    fontSize: 16,
+    color: "#3E3434",
+  },
+  active: {
+    borderRadius: '10px',
+    backgroundColor: "#713BDB",
+    "& $title": {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    "&::hover": {
+      backgroundColor: '#000'
+    },
+    // "&::after": {
+    //   left: 0,
+    //   content: "''",
+    //   position: 'absolute',
+    //   height: '100%',
+    //   width: 5,
+    //   backgroundColor: '#fff'
+    // },
+    "& $icon": {
+      fill: '#fff'
+    },
+  },
+}));
+
+const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
+  const classes = useStyles();
+  return (
+    <ListItem
+      className={clsx(classes.item, className)}
+      disableGutters
+      {...rest}
+    >
+      <Button
+        activeClassName={classes.active}
+        className={classes.button}
+        component={RouterLink}
+        to={href}
+      >
+        {Icon && <Icon className={classes.icon} size="20" />}
+        <span className={classes.title}>{title}</span>
+      </Button>
+    </ListItem>
+  );
+};
+
+export default NavItem;

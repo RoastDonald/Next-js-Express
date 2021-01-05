@@ -7,7 +7,8 @@ import "./breadcrumbs.styles.scss";
 const Breadcrumbs = () => {
   const location = useLocation();
   const route = [{ path: "/product/:slug", breadcrumb: location }];
-  const breadcrumbs = useBreadcrumbs(route);
+  // const breadcrumbs = useBreadcrumbs(route);
+  const breadcrumbs = [];
 
   return (
     <div className="breadcrumbs">

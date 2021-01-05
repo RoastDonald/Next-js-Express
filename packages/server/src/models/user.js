@@ -37,12 +37,12 @@ const userSchema = Schema({
     default: 0,
   },
   createdAt: {
-    type:Number,
-    default:Date.now()
+    type: Number,
+    default: Date.now(),
   },
   updatedAt: {
-    type:Number,
-    default:Date.now()
+    type: Number,
+    default: Date.now(),
   },
 });
 
