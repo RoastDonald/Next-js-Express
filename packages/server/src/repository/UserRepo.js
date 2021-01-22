@@ -11,7 +11,7 @@ class UserRepo {
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error:'Server Error', data: null };
+      return { error: "Server Error", data: null };
     }
   };
 
@@ -21,10 +21,28 @@ class UserRepo {
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error:'Server Error', data: null };
+      return { error: "Server Error", data: null };
     }
   };
-
+  update = async (_id, newProps) => {
+    const toModel = {
+      name: newProps.firstName,
+      surname: newProps.lastName,
+      email: newProps.email,
+    };
+    try {
+      const data = await User.findOneAndUpdate(
+        { _id },
+        { $set: { ...toModel } },
+        { new: true, upsert: true }
+      );
+      // console.log(JSON.stringify(data, null, 3));
+      return { error: null, data };
+    } catch (error) {
+      logger.error(error);
+      return { error: "Server Error", data: null };
+    }
+  };
   saveUser = async (user) => {
     const { email, password, name, surname } = user;
     const hashedPassword = await User.generateHashedPassword(password);
@@ -39,7 +57,7 @@ class UserRepo {
       return { error: null, data };
     } catch (error) {
       logger.error(error);
-      return { error:'Server Error', data: null };
+      return { error: "Server Error", data: null };
     }
   };
 }

@@ -2,6 +2,7 @@ export default {
   BASE_URL: "http://localhost:8080/api",
 
   LOGIN: "/users/login",
+  LOGIN_GOOGLE: "/users/login/google",
   REGISRER: "/users/register",
   LOGOUT: "/users/logout",
   PRODUCTS: "/products/guitars",

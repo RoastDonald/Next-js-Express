@@ -3,6 +3,20 @@ import { VERBS, mapRouteToObject } from "../helper.api";
 
 const methods = [
   {
+    method: "loginWithGoogle",
+    verb: VERBS["POST"],
+    route: Routes.LOGIN_GOOGLE,
+    params: null,
+    config: null,
+  },
+  {
+    method: "updateCurrentAccount",
+    verb: VERBS["PUT"],
+    route: Routes.ME,
+    params: null,
+    config: null,
+  },
+  {
     method: "login",
     verb: VERBS["POST"],
     route: Routes.LOGIN,

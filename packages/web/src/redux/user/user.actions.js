@@ -1,5 +1,35 @@
 import userActionTypes from "./user.types";
 
+export const authGoogleStart = (googleData) => ({
+  type: userActionTypes.USER_AUTH_GOOGLE_START,
+  payload: googleData,
+});
+
+export const authGoogleSuccess = (userInfo) => ({
+  type: userActionTypes.USER_AUTH_GOOGLE_SUCCESS,
+  payload: userInfo,
+});
+
+export const authGoogleFailure = (error) => ({
+  type: userActionTypes.USER_AUTH_GOOGLE_FAILURE,
+  payload: error,
+});
+
+export const updateUserAccountStart = (newProps) => ({
+  type: userActionTypes.USER_ACCOUNT_UPDATE_START,
+  payload: newProps,
+});
+
+export const updateUserAccountSuccess = (user) => ({
+  type: userActionTypes.USER_ACCOUNT_UPDATE_SUCCESS,
+  payload: user,
+});
+
+export const updateUserAccountFailure = (error) => ({
+  type: userActionTypes.USER_ACCOUNT_UPDATE_FAILURE,
+  payload: error,
+});
+
 export const clearError = () => ({
   type: userActionTypes.CLEAR_ERROR,
 });

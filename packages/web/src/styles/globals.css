@@ -19,10 +19,8 @@ a {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #121212;
-
+  background-color: #eee;
 }
-
 
 /* #root>div {
   height: 100%;
@@ -30,8 +28,6 @@ a {
   flex-direction: column;
 
 } */
-
-
 
 * {
   box-sizing: border-box;

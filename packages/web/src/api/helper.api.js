@@ -4,6 +4,8 @@ export const VERBS = {
   POST: "post",
   GET: "get",
   DELETE: "delete",
+  PATCH: "patch",
+  PUT: "put",
 };
 
 export const mapRouteToObject = (methods) => {

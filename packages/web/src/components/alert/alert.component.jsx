@@ -8,17 +8,18 @@ const Container = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Alert = ({ text, isSaved, handleAlertClose }) => {
+const Alert = ({ isOpen, handleAlertClose, type, message, time = 2000, className = {} }) => {
   const classes = useStyles();
 
   return (
-    <Snackbar open={true} autoHideDuration={6000} onClose={handleAlertClose} anchorOrigin={{
+    <Snackbar open={isOpen} autoHideDuration={time} onClose={handleAlertClose} anchorOrigin={{
       vertical: 'top',
       horizontal: 'center'
     }}
+      className={className}
     >
-      <Container onClose={handleAlertClose} severity={isSaved ? "success" : "error"}>
-        {text}
+      <Container onClose={handleAlertClose} severity={type}>
+        {message}
       </Container>
     </Snackbar>
   );

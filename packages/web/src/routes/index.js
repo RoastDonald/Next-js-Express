@@ -12,7 +12,7 @@ export const routes = [
   ...privateRoutes,
   { path: "/login", element: <Login /> },
   { path: "404", element: <NotFound /> },
-  { path: "*", element: <Navigate to="/404" /> },
+  //   { path: "*", element: <Navigate to="/404" /> },
 ];
 
 export default routes;

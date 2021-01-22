@@ -77,72 +77,85 @@ const EditDialog = ({ classes, user, getUsers }) => {
                 open={isOpen}
                 onClose={toggleDialog}
             >
-                <DialogTitle  >
-                    <Typography
-                        variant="subtitle"
-                        className={classes.editDialog}
-                    >
-                        Edit Document
+                <Formik
+                    initialValues={initialValues}
+                    // validateOnChange={true}
+                    // validationSchema={schemas.editUser}
+                    onSubmit={(values) => {
+                        console.log(values);
+                    }}
+                >{() => (
+                    <>
+                        <DialogTitle>
+                            <Typography
+                                variant="subtitle"
+                                className={classes.editDialog}
+                            >
+                                Edit User
                     </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Formik
-                        initialValues={initialValues}
-                        // validateOnChange={true}
-                        // validationSchema={schemas.editUser}
-                        onSubmit={(values) => {
-                            console.log(values);
-                        }}
-                    >{
-                            () => (
-                                <Form>
-                                    <FMTextField
-                                        name="name"
-                                        type="text"
-                                        label="name"
-                                        disabled={isFetching}
-                                    />
-                                    <FMTextField
-                                        name="surname"
-                                        type="text"
-                                        label="surname"
-                                        disabled={isFetching}
-                                    />
-                                    <FMTextField
-                                        name="email"
-                                        type="email"
-                                        label="email"
-                                        disabled={isFetching}
-                                    />
+                        </DialogTitle>
+                        <DialogContent>
 
-                                    <FMSelectField
-                                        label="Role"
-                                        name="role"
-                                        items={rolesObj}
-                                        disabled={isFetching}
-                                    />
-                                </Form>
-                            )}
-                    </Formik>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={toggleDialog}
-                        color="primary"
-                        disabled={isFetching}
-                    >
-                        Cancel
+                            <Form>
+                                <FMTextField
+                                    name="name"
+                                    type="text"
+                                    label="name"
+                                    className={classes.textField}
+                                    disabled={isFetching}
+                                />
+                                <FMTextField
+                                    name="surname"
+                                    type="text"
+                                    label="surname"
+                                    className={classes.textField}
+
+                                    disabled={isFetching}
+                                />
+                                <FMTextField
+                                    name="email"
+                                    type="email"
+                                    label="email"
+                                    className={classes.textField}
+
+                                    disabled={isFetching}
+                                />
+
+                                <FMSelectField
+                                    placeholder="Role"
+                                    name="role"
+
+                                    items={rolesObj}
+                                    disabled={isFetching}
+                                />
+                            </Form>
+                        </DialogContent>
+                        <DialogActions style={{
+                            width: '80%', margin: '0 auto',
+                            paddingRight: 0
+                        }}>
+                            <Button
+                                className={classes.cancelBtn}
+                                onClick={toggleDialog}
+                                color="primary"
+                                disabled={isFetching}
+                            >
+                                Cancel
                     </Button>
-                    <Button
-                        onClick={editUser}
-                        color="primary"
-                        className={classes.editIcon}
-                        disabled={state.isFetching}
-                        autoFocus
-                    >
-                        {!state.isFetching ? 'Edit' : (<CircularProgress size={16} />)}
-                    </Button>
-                </DialogActions>
+                            <Button
+                                color="primary"
+                                type="submit"
+                                className={classes.editIcon}
+                                disabled={state.isFetching}
+                                autoFocus
+                            >
+                                {!state.isFetching ? 'Edit' : (<CircularProgress size={16} />)}
+                            </Button>
+                        </DialogActions>
+                    </>
+                )}
+
+                </Formik>
             </Dialog>
         </Fragment>
     )

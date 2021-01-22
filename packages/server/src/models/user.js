@@ -11,8 +11,10 @@ const userSchema = Schema({
   },
   password: {
     type: String,
-    required: true,
     minlength: 5,
+  },
+  hash: {
+    type: String,
   },
   name: {
     type: String,
@@ -21,7 +23,6 @@ const userSchema = Schema({
   },
   surname: {
     type: String,
-    required: true,
     maxlength: 100,
   },
   cart: {

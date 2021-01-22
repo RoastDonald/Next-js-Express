@@ -1,19 +1,43 @@
 import React from "react";
-import { NavLink as RouterLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { Button, ListItem, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
-    paddingTop: 0,
-    paddingBottom: 0,
-    color: "#fff",
     position: 'relative',
+    padding: 0,
+    backgroundColor: '#fff',
+    "&:hover": {
+      "& $title": {
+        textDecoration: 'underline'
+      },
+    },
+    "&:not(:first-child)": {
+      "&::after": {
+        content: "''",
+        borderTop: ' 1px solid #ddd',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 68
+      }
+    }
 
   },
   button: {
     color: theme.palette.text.secondary,
+    justifyContent: "flex-start",
+    letterSpacing: 0,
+    padding: "10px 8px",
+    textTransform: "none",
+    width: "100%",
+  },
+  spec: {
+    marginTop: 5,
+    color: theme.palette.text.secondary,
+
     justifyContent: "flex-start",
     letterSpacing: 0,
     padding: "10px 8px",
@@ -30,31 +54,32 @@ const useStyles = makeStyles((theme) => ({
     color: "#3E3434",
   },
   active: {
-    borderRadius: '10px',
-    backgroundColor: "#713BDB",
+    color: theme.palette.primary.main,
+    borderRadius: 0,
+    backgroundColor: '#f8f8f8',
     "& $title": {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
+      fontWeight: 'bold'
     },
-    "&::hover": {
-      backgroundColor: '#000'
+    "&::after": {
+      left: 0,
+      content: "''",
+      position: 'absolute',
+      height: '100%',
+      marginRight: 10,
+      width: 3,
+      backgroundColor: '#2d2d2d'
     },
-    // "&::after": {
-    //   left: 0,
-    //   content: "''",
-    //   position: 'absolute',
-    //   height: '100%',
-    //   width: 5,
-    //   backgroundColor: '#fff'
+    // "& $icon": {
+    //   color: '#713BDB',
     // },
-    "& $icon": {
-      fill: '#fff'
-    },
   },
 }));
 
-const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
+const NavItem = ({ className, href, isBtn, icon: Icon, title, ...rest }) => {
   const classes = useStyles();
+
+
+
   return (
     <ListItem
       className={clsx(classes.item, className)}
@@ -62,9 +87,10 @@ const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
       {...rest}
     >
       <Button
-        activeClassName={classes.active}
-        className={classes.button}
-        component={RouterLink}
+        activeClassName={(!isBtn ? classes.active : null)}
+        className={(!isBtn ? classes.button : classes.spec)}
+        disableRipple={true}
+        component={(props) => <NavLink end={true}  {...props} />}
         to={href}
       >
         {Icon && <Icon className={classes.icon} size="20" />}

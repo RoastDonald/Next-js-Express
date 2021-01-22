@@ -10,10 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 const App = () => {
   const classes = useStyles();
 
-  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight - 260);
 
   useEffect(() => {
-    setInnerHeight(window.innerHeight);
+    setInnerHeight(window.innerHeight - 260);
   }, [window.innerHeight]);
 
   const { current: slides } = useRef([

@@ -27,9 +27,10 @@ export const useStyles = makeStyles((theme) => ({
     transform: "translateX(-50%)",
   },
   sectionContainer: {
+    paddingTop: 25,
     textAlign: "center",
-    marginTop: 40,
     paddingBottom: 40,
+    backgroundColor: "#5f4d82",
   },
 
   cardCta: {

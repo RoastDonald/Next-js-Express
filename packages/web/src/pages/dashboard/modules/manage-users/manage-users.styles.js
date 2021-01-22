@@ -23,6 +23,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   editIcon: {
     backgroundColor: "#5586d4",
+    color: "#fff",
+    fontSize: 12,
     "&:hover": {
       backgroundColor: "#436caf",
     },
@@ -40,7 +42,9 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#4a4a4a",
   },
   tableContainer: {
-    backgroundColor: "beige",
+    // backgroundColor: "",
+    width: "96%",
+    margin: "0 auto",
     fontSize: 18,
     "& .MuiTableRow-root": {
       borderBottom: "none",
@@ -70,9 +74,24 @@ export const useStyles = makeStyles((theme) => ({
     top: -50,
     right: 20,
   },
+  textField: {
+    width: "80%",
+    marginBottom: 10,
+  },
+  cancelBtn: {
+    backgroundColor: "#db4437",
+    color: "#fff",
+    fontSize: 12,
+    "&:hover": {
+      backgroundColor: "#bf4036",
+    },
+  },
   editDialog: {
     display: "flex",
     alignItems: "center",
+    color: "#2d2d2d",
+    fontSize: 24,
+    fontWeight: "bold",
   },
   userEmailDialog: {
     margin: "0 10px",

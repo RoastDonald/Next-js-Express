@@ -8,7 +8,12 @@ import {
   logoutFailure,
   userMeSuccess,
   userMeFailure,
+  updateUserAccountSuccess,
+  updateUserAccountFailure,
+  authGoogleFailure,
+  authGoogleSuccess,
 } from "./user.actions";
+import { showAlert, hideAlert } from "../alert/alert.actions";
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import API_CONTROLLER from "../../api/controller.api";
 
@@ -50,12 +55,47 @@ function* handleUserMe() {
   }
 }
 
+function* handleAccountUpdate({ payload: userProps }) {
+  try {
+    const { data: user } = yield API_CONTROLLER.updateCurrentAccount(userProps);
+    yield all([
+      put(updateUserAccountSuccess(user)),
+      put(showAlert("success", "Your details were successfuly updated")),
+    ]);
+  } catch (error) {
+    yield all([
+      put(updateUserAccountFailure(error)),
+      put(showAlert("error", "Something went wrong, try later")),
+    ]);
+  }
+}
+
+function* handleGoogleAuth({ payload: googleData }) {
+  try {
+    const { data: user } = yield API_CONTROLLER.loginWithGoogle({
+      token: googleData.tokenId,
+    });
+    yield put(authGoogleSuccess(user));
+  } catch (error) {
+    yield put(authGoogleFailure(error));
+  }
+}
+
 function* onUserMeStart() {
   yield takeLatest(userActionTypes.USER_ME_START, handleUserMe);
 }
-
+function* onUserAccountUpdate() {
+  yield takeLatest(
+    userActionTypes.USER_ACCOUNT_UPDATE_START,
+    handleAccountUpdate
+  );
+}
 function* onUserLoginStart() {
   yield takeLatest(userActionTypes.USER_LOGIN_START, handleLogin);
+}
+
+function* onUserGoogleAuth() {
+  yield takeLatest(userActionTypes.USER_AUTH_GOOGLE_START, handleGoogleAuth);
 }
 
 function* onUserRegisterStart() {
@@ -72,5 +112,7 @@ export default function* userSagas() {
     call(onUserRegisterStart),
     call(onUserLogoutStart),
     call(onUserMeStart),
+    call(onUserAccountUpdate),
+    call(onUserGoogleAuth),
   ]);
 }

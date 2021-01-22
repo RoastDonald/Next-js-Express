@@ -6,12 +6,16 @@ import {
     Toolbar,
     Box,
     Drawer,
-    Button
+    Button,
+    Switch
 } from "@material-ui/core";
 import clsx from "clsx";
-import { Menu, MenuItem } from "@material-ui/core";
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import { withStyles } from '@material-ui/core/styles';
+import { Menu, MenuItem, Typography } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import {
     Menu as MenuIcon,
@@ -27,13 +31,61 @@ import { selectCurrentUser } from "@/redux/user/user.selectors";
 import { FMButton } from "@/components/formik-mui";
 import { useStyles } from './header.styles';
 
-
-
-
-
 import { ReactComponent as FilterIcon } from '@/ui/icons/filter.svg';
 
 
+const IOSSwitch = withStyles((theme) => ({
+    root: {
+        width: 42,
+        height: 20,
+        padding: 0,
+        margin: theme.spacing(1),
+    },
+    switchBase: {
+        padding: 1,
+        '&$checked': {
+            transform: 'translateX(20px)',
+            color: theme.palette.common.white,
+            '& + $track': {
+                backgroundColor: '#52d869',
+                opacity: 1,
+                border: 'none',
+            },
+        },
+        '&$focusVisible $thumb': {
+            color: '#52d869',
+            border: '6px solid #fff',
+        },
+    },
+    thumb: {
+        width: 18,
+        height: 18,
+    },
+    track: {
+        borderRadius: 26 / 2,
+        border: `1px solid ${theme.palette.grey[400]}`,
+        backgroundColor: theme.palette.grey[50],
+        opacity: 1,
+        transition: theme.transitions.create(['background-color', 'border']),
+    },
+    checked: {},
+    focusVisible: {},
+}))(({ classes, ...props }) => {
+    return (
+        <Switch
+            focusVisibleClassName={classes.focusVisible}
+            disableRipple
+            classes={{
+                root: classes.root,
+                switchBase: classes.switchBase,
+                thumb: classes.thumb,
+                track: classes.track,
+                checked: classes.checked,
+            }}
+            {...props}
+        />
+    );
+});
 
 
 
@@ -166,6 +218,7 @@ const Header = ({ logout, currentUser }) => {
         });
     };
 
+    const userAvatarSign = `${currentUser.name.charAt(0)}${currentUser.surname.charAt(0)}`;
     return (
         <Fragment>
             <AppBar
@@ -207,26 +260,29 @@ const Header = ({ logout, currentUser }) => {
                         display={{ xs: "none", sm: "flex" }}
                         className={classes.headerNavList}
                     >
-                        {renderCurrentLinks(links.user)}
-                        <Menu
-                            className={classes.menuContainer}
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleClose}>
-                                <AccountCircleIcon />
-                                <Link href="/my-account" underline="none">
-                                    Profile
-                  </Link>
-                            </MenuItem>
-                            <MenuItem onClick={logout} style={{ color: "#f44336" }}>
-                                <ExitToAppIcon style={{ fill: "#f44336" }} />
-                                <span>Log out</span>
-                                {/* <CircularProgress size={12} color="secondary" /> */}
-                            </MenuItem>
-                        </Menu>
+                        <Box className={classes.userBox}>
+                            <Box className={classes.userBoxContent}>
+                                <IconButton style={{ marginRight: 12 }}>
+                                    <NotificationsIcon />
+                                </IconButton>
+                                <Typography className={classes.userAvatar}>
+                                    <span className={classes.userAvatarSign}>{userAvatarSign}</span>
+                                </Typography>
+                                <Box className={classes.userMeta}>
+                                    <Typography className={classes.role}>
+                                        {currentUser.role ? 'admin' : 'user'}
+                                    </Typography>
+                                    <Typography className={classes.username}>
+                                        {currentUser.name}
+                                    </Typography>
+                                </Box>
+                            </Box>
+
+                        </Box>
+                        <Box className={classes.modeSwitcher}>
+                            <Brightness4Icon size={24} />
+                            <IOSSwitch checked={true} onChange={() => { }} name="checkedB" />
+                        </Box>
                     </Box>
                 </Toolbar>
             </AppBar>

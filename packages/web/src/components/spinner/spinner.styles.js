@@ -7,6 +7,21 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  logo: {
+    width: 32,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    "& > path": {
+      fill: "#585858",
+    },
+  },
+  spinnerWrapper: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+  },
 }));
 
 //   #loading {
@@ -14,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
 //     width: 50px;
 //     height: 100vh;
 //     border: 3px solid rgba(255, 255, 255, 0.3);
-//     border-radius: 50%;
+//     border-radius: '50%',
 //     background-color: yellow;
 //     border-top-color: #fff;
 //     animation: spin 1s ease-in-out infinite;

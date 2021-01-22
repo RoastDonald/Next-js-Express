@@ -2,7 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 const purpleLight = "#011d3a";
 const purpleDark = "#F20775";
-const blueLight = "#7fffd4";
+const blueLight = "#2d2d2d";
 const grey = "#f2f2f2";
 const white = "#e1e1e1";
 export default createMuiTheme({

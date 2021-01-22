@@ -17,6 +17,9 @@ const schemas = {
   login: yup.object({
     ...userCredentials,
   }),
+  loginWithGoogle: yup.object({
+    token: yup.string().required(),
+  }),
   email: yup.object({
     email: yup.string().email().required(),
   }),
@@ -26,6 +29,11 @@ const schemas = {
     email: yup.string().email().required(),
     role: yup.number().min(0).max(1),
   },
+  updateUser: yup.object({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().email().required(),
+  }),
 
   product: yup.object({
     name: yup.string().required(),

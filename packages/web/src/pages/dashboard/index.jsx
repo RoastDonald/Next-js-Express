@@ -1,24 +1,22 @@
-import React, { Fragment } from "react";
+import React, { Suspense } from "react";
+import { Spinner } from '@/components';
 import { Header, Panel, Main } from "./layout";
-
-
-const Wrapper = ({ children }) => (
-  <div style={{ marginTop: '12vh' }}>
-    {children}
-  </div>
-);
+import { Outlet } from 'react-router-dom';
 
 
 const Dashboard = (props) => {
   return (
-    <Fragment>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Header />
-      <Wrapper>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Panel />
-        <Main />
-      </Wrapper>
-
-    </Fragment>
+        <div style={{ marginTop: 88, width: 'calc(100% - 254px)' }}>
+          <Suspense fallback={<Spinner />}>
+            <Outlet />
+          </Suspense>
+        </div>
+      </div>
+    </div>
   );
 };
 

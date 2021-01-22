@@ -23,6 +23,11 @@ export const linking = {
         link: "/my-account/cart",
         icon: ShoppingBasketOutlined,
       },
+      {
+        title: "Sign Out",
+        link: "/my-account",
+        icon: AccountCircleIcon,
+      },
     ],
     public: true,
   },

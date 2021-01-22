@@ -1,5 +1,7 @@
 import { FMButton, FMTextField } from '@/components/formik-mui';
-import { loginStart } from "@/redux/user/user.actions";
+import { GoogleSignIn, FacebookSignIn } from '@/components';
+import { Typography } from '@material-ui/core';
+import { loginStart, authGoogleStart } from "@/redux/user/user.actions";
 import { slelectCurrentUserDomain } from "@/redux/user/user.selectors";
 import schemas from "@common/validation";
 import { Collapse, IconButton, InputAdornment, Link } from "@material-ui/core";
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   form: {
+
     "& > *:not(:last-child)": {
       marginBottom: 20,
     },
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   loginBtn: {
-    marginTop: 12,
+    textTransform: 'capitalize',
     width: "60%",
     margin: "0 auto",
   },
@@ -51,6 +54,34 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 8,
     },
   },
+  methodsContainer: {
+    marginTop: 15,
+    width: '100%'
+  },
+  methodsTitle: {
+    textAlign: 'center',
+    position: 'relative',
+    "&::before": {
+      content: "''",
+      display: 'block',
+      backgroundColor: '#404040',
+      width: '40%',
+      position: 'absolute',
+      top: '50%',
+      left: 0,
+      height: 2
+    },
+    "&::after": {
+      content: "''",
+      display: 'block',
+      backgroundColor: '#404040',
+      width: '40%',
+      position: 'absolute',
+      top: '50%',
+      right: 0,
+      height: 2
+    }
+  }
 }));
 
 const initialValues = {
@@ -58,7 +89,7 @@ const initialValues = {
   password: "",
 };
 
-const LoginBlock = ({ login, userMeta, toggleAuth }) => {
+const LoginBlock = ({ login, userMeta, toggleAuth, authGoogle }) => {
   const [isLoading, setLoading] = useState(false);
   const [isErrorOpen, setErrorOpen] = useState(false);
   const [isPassVisable, setPassVisable] = useState(false);
@@ -149,6 +180,14 @@ const LoginBlock = ({ login, userMeta, toggleAuth }) => {
               >
                 login
               </FMButton>
+              <div className={classes.methodsContainer}>
+                <Typography className={classes.methodsTitle}>OR</Typography>
+                <div className={classes.methodsContent}>
+                  <GoogleSignIn handleLogin={authGoogle} setLoading={setLoading} />
+                  <FacebookSignIn />
+                </div>
+              </div>
+
               <div className={classes.loginCtaContainer}>
                 <Link onClick={toggleAuth} color="grey">
                   Create an account?
@@ -169,6 +208,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispachToProps = (dispatch) => ({
   login: (userCredentials) => dispatch(loginStart(userCredentials)),
+  authGoogle: (googleData) => dispatch(authGoogleStart(googleData)),
 });
 
 export default connect(mapStateToProps, mapDispachToProps)(LoginBlock);

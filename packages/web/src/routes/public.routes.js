@@ -15,7 +15,6 @@ const generateSubPages = (baseURL, pages, Wrapper) => {
       {},
       {
         element: pages[key],
-
         path: baseURL,
       }
     );

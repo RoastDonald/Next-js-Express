@@ -1,7 +1,8 @@
 import React, { lazy } from "react";
-
+import MyAccount from "@/pages/shop/sub-pages/my-account";
 import SecureRoute from "@/hoc/secure-route";
 import Roles from "@/utils/role";
+import Spinner from "@/components/spinner/spinner.component";
 const ShopLayout = lazy(() => import("@/pages/shop"));
 const DashboardLayout = lazy(() => import("@/pages/dashboard"));
 
@@ -17,6 +18,15 @@ const DashboardModules = {
   ),
 };
 
+const MyAccountModules = {
+  Overview: lazy(() =>
+    import("@/pages/shop/sub-pages/my-account/modules/overview/overview.module")
+  ),
+  Details: lazy(() =>
+    import("@/pages/shop/sub-pages/my-account/modules/details/details.module")
+  ),
+};
+
 export const privateRoutes = [
   {
     path: "/my-account",
@@ -24,16 +34,26 @@ export const privateRoutes = [
       <SecureRoute
         path={["/my-account"]}
         roles={[Roles.User, Roles.Admin]}
-        component={(props) => (
-          <ShopLayout>
-            <div>test</div>
-          </ShopLayout>
-        )}
+        component={(props) => <MyAccount {...props} />}
       />
     ),
+    children: [
+      {
+        path: "/",
+        element: <MyAccountModules.Overview />,
+      },
+      {
+        path: "/profile",
+        element: <MyAccountModules.Details />,
+      },
+      {
+        path: "/cart",
+        element: <div>322222</div>,
+      },
+    ],
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: (
       <SecureRoute
         path={["/dashboard"]}
@@ -42,6 +62,10 @@ export const privateRoutes = [
       />
     ),
     children: [
+      {
+        path: "/",
+        element: <DashboardModules.ManageUsers />,
+      },
       {
         path: "add-product",
         element: <DashboardModules.AddProduct />,
